@@ -32,7 +32,7 @@ const [pagesPerPage]= React.useState(Math.ceil(myNetworks.length/limit));
     setActiveHeader(false);
     history.push(`/userProfile/${memberId}`);
 
-    
+    setOpenModel(!openModel);
     
   }
   
