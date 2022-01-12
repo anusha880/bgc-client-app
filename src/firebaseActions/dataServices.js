@@ -36,7 +36,8 @@ const getAllRecommenededCommunities = async (user) => {
     const querySnapshot = await getDocs(collection(db, "community"));
     querySnapshot.forEach((item) => {
       if (
-        item.data().members && !item.data().members.filter((item) => item.email === email).length > 0
+        item.data().members &&
+        !item.data().members.filter((item) => item.email === email).length > 0
       ) {
         communityCollection.push({
           communityId: item.id,
@@ -45,7 +46,7 @@ const getAllRecommenededCommunities = async (user) => {
           members: item.data().members,
           image: item.data().imageUrl,
           tags: item.data().tags,
-          createdMember:item.data().createdMember,
+          createdMember: item.data().createdMember,
         });
       }
     });
@@ -169,14 +170,17 @@ const myCommunity = async (user) => {
   const q = query(communityRef, orderBy("createdAt", "desc"));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    if (doc.data().members && doc.data().members.filter((item) => item.email === email).length > 0) {
+    if (
+      doc.data().members &&
+      doc.data().members.filter((item) => item.email === email).length > 0
+    ) {
       communties.push({
         communityId: doc.id,
         name: doc.data().name,
         description: doc.data().description,
         members: doc.data().members,
         image: doc.data().imageUrl,
-        createdMember:doc.data().createdMember,
+        createdMember: doc.data().createdMember,
       });
     }
   });
@@ -204,7 +208,6 @@ const joinACommunity = async (user, communityId) => {
   }
 };
 
-
 const leaveMemberFromCommunity = async (user, communityId) => {
   const { email, firstName, imageUrl } = user;
   let membersArray = [];
@@ -223,7 +226,6 @@ const leaveMemberFromCommunity = async (user, communityId) => {
     console.log("No such document!");
   }
 };
- 
 
 const getAllCommunityPosts = async (communityId) => {
   let communityData = {};
@@ -321,7 +323,7 @@ const getAPost = async (postId) => {
         responseTo: doc.data().responseTo,
         userImage: doc.data().userImage,
         usersLiked: doc.data().usersLiked,
-        likeCount: doc.data().likeCount
+        likeCount: doc.data().likeCount,
       });
     });
     return postData;
@@ -354,7 +356,6 @@ const updateEditPost = async (editPost) => {
   }
 };
 
-
 const deletePost = async (deletePost) => {
   try {
     const docRef = doc(db, "posts", deletePost.postId);
@@ -363,7 +364,6 @@ const deletePost = async (deletePost) => {
       const result = await deleteDoc(docRef);
       return result;
     } else {
-     
       console.log("No such post!");
     }
   } catch (error) {
@@ -432,7 +432,7 @@ const likeAComment = async (payload) => {
   const docRef = doc(db, "comments", payload.commentId);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    const {usersLiked = [], likeCount = 0} = docSnap.data()
+    const { usersLiked = [], likeCount = 0 } = docSnap.data();
     let usersArray = [...usersLiked, payload.email];
     const result = await updateDoc(docRef, {
       likeCount: likeCount + 1,
@@ -449,11 +449,13 @@ const dislikeAComment = async (payload) => {
     const docRef = doc(db, "comments", payload.commentId);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      const {usersLiked = [], likeCount} = docSnap.data()
-      const usersArray = usersLiked.filter(userEmail => userEmail !== payload.email)
+      const { usersLiked = [], likeCount } = docSnap.data();
+      const usersArray = usersLiked.filter(
+        (userEmail) => userEmail !== payload.email
+      );
       const result = await updateDoc(docRef, {
         likeCount: likeCount - 1,
-        usersLiked: usersArray
+        usersLiked: usersArray,
       });
       return result;
     } else {
@@ -495,6 +497,7 @@ const addAReportToPost = async (postId, currentReport) => {
     const result = await updateDoc(docRef, {
       reports: filterReports,
       status: docSnap.data().status || "active",
+      isReportPresent: true,
     });
     return result;
   } else {
@@ -533,7 +536,7 @@ const getAllMembers = async (user) => {
       if (doc.data().email !== email) {
         users.push({
           memberId: doc.data().userId,
-          name: [doc.data().firstName, doc.data().lastName].join(' '),
+          name: [doc.data().firstName, doc.data().lastName].join(" "),
           firstName: doc.data().firstName,
           lastName: doc.data().lastName,
           email: doc.data().email,
@@ -543,10 +546,10 @@ const getAllMembers = async (user) => {
           lastLogin: doc.data().lastLogin,
           status: doc.data().status,
           userRole: doc.data().userRole,
-        })
+        });
       }
     });
-    const members = users.filter(({userRole = ''})=> userRole === 'member')
+    const members = users.filter(({ userRole = "" }) => userRole === "member");
     return members;
   } catch (error) {
     console.log(error);
@@ -564,7 +567,7 @@ export const getAllAdmins = async (user) => {
       if (doc.data().email !== email) {
         users.push({
           memberId: doc.data().userId,
-          name: [doc.data().firstName, doc.data().lastName].join(' '),
+          name: [doc.data().firstName, doc.data().lastName].join(" "),
           email: doc.data().email,
           createdAt: doc.data().createdAt,
           lastLogin: doc.data().lastLogin,
@@ -574,9 +577,9 @@ export const getAllAdmins = async (user) => {
       }
     });
     return users.filter(
-      ({ userRole='' }) => userRole === "admin" || userRole === "admin-pending"
+      ({ userRole = "" }) =>
+        userRole === "admin" || userRole === "admin-pending"
     );
-
   } catch (error) {
     console.log(error);
   }
@@ -596,40 +599,36 @@ export const handleActivateDeactivateProfile = async (selectedUser) => {
   }
 };
 
-export const inviteAdmin = async (email)=>{
-  try{
-
-    const docRef = doc(db, 'users',email)
-    const docSnap = await getDoc(docRef)
-    if(docSnap.exists() && docSnap.data().userRole === 'admin'){
+export const inviteAdmin = async (email) => {
+  try {
+    const docRef = doc(db, "users", email);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists() && docSnap.data().userRole === "admin") {
       // handle admin user
-      throw Error('Someone is already using that email address')
+      throw Error("Someone is already using that email address");
     }
-    
+
     const results = await addDoc(collection(db, "mail"), {
       to: email,
-      message:{
+      message: {
         subject: "Invite new Admin",
-        html:`
+        html: `
         <div>
         Hello!, please click <a target="_blank" href="https://bgc-functions.firebaseapp.com/login"> here </a>
         to register as an admin.
         </div>
-        `
-      }
+        `,
+      },
     });
-
+  } catch (err) {
+    throw err;
   }
-  catch(err){
-    throw err
-  }
-
-}
+};
 
 const addMemberToMyNetwork = async (user, newMember) => {
   try {
     var { email, firstName, lastName, imageUrl, headLine } = newMember;
-      headLine = headLine ? headLine : '';
+    headLine = headLine ? headLine : "";
 
     const docRef = doc(db, "users", user.email);
     const docSnap = await getDoc(docRef);
@@ -652,7 +651,6 @@ const addMemberToMyNetwork = async (user, newMember) => {
     console.log("error", error);
   }
 };
-
 
 const removeMemberToMyNetwork = async (user, existEmail) => {
   try {
@@ -704,7 +702,7 @@ const getAllCommunities = async (user) => {
       description: doc.data().description,
       members: doc.data().members,
       image: doc.data().imageUrl,
-      createdMember:doc.data().createdMember,
+      createdMember: doc.data().createdMember,
     });
   });
   return communties;

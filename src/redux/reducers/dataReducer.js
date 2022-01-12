@@ -23,7 +23,8 @@ import {
   SET_CURRENT_PAGE,
   SET_CURRENT_COMMUNITY_ID,
   SET_MEMBERS,
-  LOADING_MEMBERS
+  LOADING_MEMBERS,
+  SET_REPORTED_DATA
 } from '../types'
 
 const initialState = {
@@ -47,6 +48,7 @@ const initialState = {
   loadingMembers: false,
   allUsersCommunities: [],
   allUsersCommunitiesLoading: false,
+  reportedData:[]
 };
 
 export default function(state = initialState, action) {
@@ -197,6 +199,12 @@ export default function(state = initialState, action) {
           comments: [...state.post.comments, action.payload]
         }
       };
+      case  SET_REPORTED_DATA:
+        return {
+          ...state,
+          reportedData: action.payload,
+          loadingMembers: false
+        } 
     default:
       return state;
   }

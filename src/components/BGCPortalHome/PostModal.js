@@ -3,17 +3,26 @@ import styled from "styled-components";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 import ImageIcon from "@mui/icons-material/Image";
 import Button from "@material-ui/core/Button";
-import { addAPost, addAPostwithImage, clearErrors } from '../../redux/actions/postActions';
-
+import {
+  addAPost,
+  addAPostwithImage,
+  clearErrors,
+} from "../../redux/actions/postActions";
 
 // import firebase from 'firebase';
 // import { postArticleAPI } from '../actions';
 
-const PostModal = ({ user: { userInfo }, showModal, addACommunityPost, addACommunityPostwithImage, handleClick }) => {
+const PostModal = ({
+  user: { userInfo },
+  showModal,
+  addACommunityPost,
+  addACommunityPostwithImage,
+  handleClick,
+}) => {
   const [editorText, setEditorText] = useState("");
   const [sharedImage, setSharedImage] = useState("");
   const [videoLink, setVideoLink] = useState("");
@@ -43,38 +52,38 @@ const PostModal = ({ user: { userInfo }, showModal, addACommunityPost, addACommu
     // {
     //     return;
     // }
-    if(sharedImage !== "") {
-        const formData = new FormData();
-        formData.append('image', sharedImage, sharedImage.name);
-        const payload = {
-            postPayload: {
-            sharedImg: '',
-            sharedVideo: videoLink,
-            body: editorText,
-            // Hard Coded for now, need to populate from selected community
-            communityId: 'hrOuNe4vM52rbPWX9ceh',
-            userName: `${firstName} ${lastName}`
-            },
-            formData
-        };
-        addACommunityPostwithImage(payload);
-            reset(e);
+    if (sharedImage !== "") {
+      const formData = new FormData();
+      formData.append("image", sharedImage, sharedImage.name);
+      const payload = {
+        postPayload: {
+          sharedImg: "",
+          sharedVideo: videoLink,
+          body: editorText,
+          isReportPresent: false,
+          // Hard Coded for now, need to populate from selected community
+          communityId: "hrOuNe4vM52rbPWX9ceh",
+          userName: `${firstName} ${lastName}`,
+        },
+        formData,
+      };
+      addACommunityPostwithImage(payload);
+      reset(e);
     } else {
-        const payload = {
-            postPayload: {
-            sharedImg: '',
-            sharedVideo: videoLink,
-            body: editorText,
-            // Hard Coded for now, need to populate from selected community
-            communityId: 'hrOuNe4vM52rbPWX9ceh',
-            userName: `${firstName} ${lastName}`
-            }
-        };
-        addACommunityPost(payload);
-            reset(e);
+      const payload = {
+        postPayload: {
+          sharedImg: "",
+          sharedVideo: videoLink,
+          body: editorText,
+          isReportPresent: false,
+          // Hard Coded for now, need to populate from selected community
+          communityId: "hrOuNe4vM52rbPWX9ceh",
+          userName: `${firstName} ${lastName}`,
+        },
+      };
+      addACommunityPost(payload);
+      reset(e);
     }
-    
-        
   };
 
   const reset = (e) => {
@@ -93,7 +102,7 @@ const PostModal = ({ user: { userInfo }, showModal, addACommunityPost, addACommu
           <Content>
             <Header>
               <h2>Create a post</h2>
-              <CloseIcon onClick={(event) => reset(event)} color="primary"/>
+              <CloseIcon onClick={(event) => reset(event)} color="primary" />
             </Header>
 
             <SharedContent>
@@ -141,9 +150,9 @@ const PostModal = ({ user: { userInfo }, showModal, addACommunityPost, addACommu
                         value={videoLink}
                         onChange={(e) => setVideoLink(e.target.value)}
                       />
-                      {ReactPlayer.canPlay(videoLink)?(
+                      {ReactPlayer.canPlay(videoLink) ? (
                         <ReactPlayer width={"100%"} url={videoLink} />
-                      ): null}
+                      ) : null}
                     </>
                   )
                 )}
@@ -157,7 +166,7 @@ const PostModal = ({ user: { userInfo }, showModal, addACommunityPost, addACommu
                   <span>Add Image</span>
                 </AssetButton>
                 <AssetButton onClick={() => switchAssetArea("media")}>
-                  <OndemandVideoIcon color="primary"/>
+                  <OndemandVideoIcon color="primary" />
                   {/* <img src="/images/shared-vid.png" alt="" /> */}
                 </AssetButton>
                 <span>Add Video</span>
@@ -173,7 +182,7 @@ const PostModal = ({ user: { userInfo }, showModal, addACommunityPost, addACommu
                 disabled={!editorText ? true : false}
                 onClick={(event) => postArticle(event)}
                 color="primary"
-                name= "post"
+                name="post"
               >
                 Post
               </Button>
@@ -339,7 +348,7 @@ const Editor = styled.div`
     padding: 0;
     cursor: pointer;
     outline: none;
-    color: rgba(0,0,0,0.87);
+    color: rgba(0, 0, 0, 0.87);
     font-family: Roboto;
     font-size: 16px;
     letter-spacing: 0.15px;
@@ -370,8 +379,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    addACommunityPost: (payload) => dispatch(addAPost(payload)),
-    addACommunityPostwithImage: (payload) => dispatch(addAPostwithImage(payload))
+  addACommunityPost: (payload) => dispatch(addAPost(payload)),
+  addACommunityPostwithImage: (payload) => dispatch(addAPostwithImage(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostModal);

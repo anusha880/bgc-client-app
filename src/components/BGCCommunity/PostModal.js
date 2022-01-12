@@ -59,7 +59,8 @@ const PostModal = ({ user: {userInfo}, showModal, addACommunityPost, addACommuni
           likeCount: 0,
           commentCount: 0,
           usersLiked: [],
-          status: 'active'
+          status: 'active',
+          isReportPresent: false,
         },
         sharedDocument
       };
@@ -80,7 +81,8 @@ const PostModal = ({ user: {userInfo}, showModal, addACommunityPost, addACommuni
             likeCount: 0,
             commentCount: 0,
             usersLiked:[],
-            status: 'active'
+            status: 'active',
+            isReportPresent: false,
             }
         };
         addACommunityPost(payload);
