@@ -9,7 +9,7 @@ import {
 } from "../../firebaseActions/dataServices";
 import { DataTable } from "./Table";
 import { ActionsMenu } from "./ActionsMenu";
-import {AlertDialogWithActions} from "./Dialog";
+import {AlertDialogWithActions, AlertInfoDialog} from "./Dialog";
 import { getStatus, getStatusColor } from "../../util/constant";
 
 function MembersPage({ user }) {
@@ -17,6 +17,7 @@ function MembersPage({ user }) {
   const [loading, setLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const getMembers = () => {
     setLoading(true);
@@ -32,7 +33,8 @@ function MembersPage({ user }) {
   const handleActivateDeactivate = async () => {
     await handleActivateDeactivateProfile(selectedUser);
     await getMembers();
-    handleClose();
+    setShowSuccessModal(true)
+    setShowDialog(false)
   };
 
   const columns = useMemo(
@@ -108,6 +110,14 @@ function MembersPage({ user }) {
     );
   };
 
+  const successDialogBody = ()=>{
+    return(
+      <div>
+        The profile has been {getActivateStatus().toLowerCase()}d.
+      </div>
+    )
+  }
+
   return (
     <div>
       <h2>Alumnae Portal Members</h2>
@@ -125,6 +135,16 @@ function MembersPage({ user }) {
         acceptButtonText={getActivateStatus()}
         rejectButtonText="CANCEL"
         dialogBody={getDialogBody()}
+        dialogTitle={`${getActivateStatus()} Profile`}
+      />
+      <AlertInfoDialog
+        open={showSuccessModal}
+        showActions={false}
+        handleClose={()=>{
+          handleClose()
+          setShowSuccessModal(false)
+        }}
+        dialogBody={successDialogBody()}
         dialogTitle={`${getActivateStatus()} Profile`}
       />
     </div>
