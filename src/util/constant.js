@@ -103,13 +103,12 @@ export const experience = [
   { name: "Company", value: "updatedCompany" },
   { name: "Department", value: "updatedDepartment" },
   { name: "Job Title", value: "updatedJobTtile" },
-   { name: "Location", value: "updatedLocation"},
-   
+  { name: "Location", value: "updatedLocation" },
 ];
 export const educations = [
   { name: "University", value: "updatedUniversity" },
   { name: "Field Of Study", value: "updatedFieldOfStudy" },
-  { name: "Location", value: "updatedLocation"},
+  { name: "Location", value: "updatedLocation" },
 ];
 export const initialChipData = [
   { key: 0, label: "Artificial Intelligence", itemSelected: false },
@@ -184,11 +183,10 @@ export const chapterValue = [
   { name: "Other", value: "16" },
 ];
 
-export const statuss=[
-  { name: "employed", value:"employed"},
-  { name: "unemployed", value: "unemployed"}
+export const statuss = [
+  { name: "Employed", value: "Employed" },
+  { name: "Unemployed", value: "Unemployed" },
 ];
-
 
 // regex to capture links
 export const linkRegex = /((https?:\/\/)?[^\s.]+\.[\w][^\s]+)/g;
@@ -212,4 +210,3 @@ export const getStatusColor = (status) => {
 
   return mapping[status] || "auto";
 };
-

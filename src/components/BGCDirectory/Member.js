@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import AddIcon from "@mui/icons-material/Add";
 import CheckIcon from "@mui/icons-material/Check";
 import { Link } from "react-router-dom";
-import { setActiveHeader } from "../../redux/actions/userActions";
+import { setActiveHeader,updateTabIndex } from "../../redux/actions/userActions";
 import { connect } from "react-redux";
 
 const Member = ({
@@ -59,7 +59,10 @@ const Member = ({
       <span className="member_block_name">
         <Link
           to={`/userProfile/${memberId}`}
-          onClick={() => setActiveHeader(false)}
+          onClick={() => {
+            setActiveHeader(false);
+            updateTabIndex(4);
+          }}
         >
           {" "}
           {firstName} {lastName}
@@ -74,5 +77,6 @@ const Member = ({
 Member.propTypes = {};
 const mapDispatchToProps = (dispatch) => ({
   setActiveHeader: (value) => dispatch(setActiveHeader(value)),
+  updateTabIndex: (value) => dispatch(updateTabIndex(value)),
 });
 export default connect(null, mapDispatchToProps)(Member);

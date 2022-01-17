@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import {
-  setActiveHeader,
+  setActiveHeader,updateTabIndex
 } from "../../redux/actions/userActions";
 import { editUserDetails } from "../../redux/actions/userActions";
 import {
@@ -31,7 +31,7 @@ const Members = ({ communityPosts: { community: { members } = [] } = {} }) => {
     const memberId = members
       .filter((x) => x.email === email)
       .map((y) => y.memberId);
-    console.log(memberId);
+      updateTabIndex(4);
     setActiveHeader(false);
     history.push(`/userProfile/${memberId}`);
   };
@@ -162,6 +162,9 @@ const mapStateToProps = (state) => ({
   user: state.user,
   communityPosts: state.data.communityPosts,
 });
-const mapDispatchToProps = { editUserDetails };
+
+const mapDispatchToProps =(dispatch)=> ({ 
+  updateTabIndex: (value) => dispatch(updateTabIndex(value)),
+ });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Members);

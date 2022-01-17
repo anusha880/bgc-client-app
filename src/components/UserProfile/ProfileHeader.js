@@ -37,9 +37,12 @@ const ProfileHeader = ({
 }) => {
   const [openModel, setOpenModel] = useState(false);
   const [openSocialModel, setOpenSocialModel] = useState(false);
-  const { socialLinks, profileStatus } = userInfo;  
-  
-  const [profile, setProfile] = useState({ updatedSocialLinks: socialLinks, updatedProfileStatus: profileStatus });
+  const { socialLinks, profileStatus } = userInfo;
+
+  const [profile, setProfile] = useState({
+    updatedSocialLinks: socialLinks,
+    updatedProfileStatus: profileStatus,
+  });
   const [profileVisibility, setProfileVisibility] = useState(false);
   // const [updatedSocialLinks, setpdatedSocialLinks] = useState({LinkedIn: '', Facebook: '',Twitter:''});
   const label = { inputProps: { "aria-label": "Switch demo" } };
@@ -47,7 +50,6 @@ const ProfileHeader = ({
     setProfile({ ...profile, [event.target.name]: event.target.value });
   };
 
-  
   const addMemberHandler = (selectedEmail) => {
     addMemberToNetwork(selectedEmail);
   };
@@ -95,7 +97,6 @@ const ProfileHeader = ({
         ...profile.updatedSocialLinks,
         [event.target.name]: event.target.value,
       },
-      
     });
   };
   // const handleSocialSubmit=()=>{
@@ -143,7 +144,7 @@ const ProfileHeader = ({
       profileStatus: updatedProfileStatus,
     };
     const request = { ...userInfo, ...userDetails };
-    
+
     editUserDetails(request);
     setOpenModel(false);
   };
@@ -168,7 +169,7 @@ const ProfileHeader = ({
     updatedSocialLinks = { LINKEDIN: "", FACEBOOK: "", TWITTER: "" },
     updatedProfileStatus,
   } = profile;
- 
+
   let info = {};
   let addedToMyNetwork = false;
 
@@ -200,7 +201,6 @@ const ProfileHeader = ({
           myNetworks.filter((item) => item.email === info.email).length > 0;
       }
     }
-
   } else {
     const {
       firstName,
@@ -221,20 +221,19 @@ const ProfileHeader = ({
       profileVisibletoAlumnaeCommunity,
     };
   }
-  
-  
+
   return (
     <div>
       <div className="profile__header">
         <div className="profile__header__main__container">
-          <div className="profile__header__main">          
+          <div className="profile__header__main">
             <div className="imgpos">
               <Avatar
-                  alt="Remy Sharp"
-                  className="profile__header__image"
-                  src={info.imageUrl}
-                />
-            {!readOnlyFlow && !loading && (
+                alt="Remy Sharp"
+                className="profile__header__image"
+                src={info.imageUrl}
+              />
+              {!readOnlyFlow && !loading && (
                 <ProfilePictureChange
                   userInfo={userInfo}
                   imageUrl={info.imageUrl}
@@ -249,10 +248,9 @@ const ProfileHeader = ({
               ) : (
                 <label className="user_role">{info.headLine}</label>
               )}
-              
+
               <div className="empsts">
-              <Chip className="user_status"  label={updatedProfileStatus} />
-              
+                <Chip className="user_status" label={updatedProfileStatus} />
               </div>
               {/* {info.location === undefined ? (
                 <label className="user__role">No Location added</label>
@@ -278,7 +276,7 @@ const ProfileHeader = ({
                 <span
                   onClick={() => addMemberHandler(info.email)}
                   className="member_add_action_label"
-                   >
+                >
                   ADD TO MY NETWORK
                 </span>
               </div>
@@ -300,32 +298,36 @@ const ProfileHeader = ({
             <p>Email : </p>{" "}
             <p className="profile__user_bar_left__value_mail">{info.email}</p>
           </div>
-          {(updatedSocialLinks['LINKEDIN'] || updatedSocialLinks['TWITTER'] || updatedSocialLinks['FACEBOOK']) && (
-          <div className="profile__user_bar_right">
-            <p className="profile__user_bar_left">Social :</p>{" "}
-            {updatedSocialLinks['LINKEDIN'] && (
-            <p
-              className="profile__user_bar_left__value"
-              onClick={() => handleSocialModelClick("LINKEDIN")}
-            >
-              LINKEDIN 
-            </p>
-            )}{" "}
-            {updatedSocialLinks['TWITTER'] && (<p
-              className="profile__user_bar_left__value"
-              onClick={() => handleSocialModelClick("TWITTER")}
-            >
-              TWITTER
-            </p>
-            )}
-            {updatedSocialLinks['FACEBOOK'] && (<p
-              className="profile__user_bar_left__value"
-              onClick={() => handleSocialModelClick("FACEBOOK")}
-            >
-              FACEBOOK
-            </p>
-            )}
-          </div>
+          {(updatedSocialLinks["LINKEDIN"] ||
+            updatedSocialLinks["TWITTER"] ||
+            updatedSocialLinks["FACEBOOK"]) && (
+            <div className="profile__user_bar_right">
+              <p className="profile__user_bar_left">Social :</p>{" "}
+              {updatedSocialLinks["LINKEDIN"] && (
+                <p
+                  className="profile__user_bar_left__value"
+                  onClick={() => handleSocialModelClick("LINKEDIN")}
+                >
+                  LINKEDIN
+                </p>
+              )}{" "}
+              {updatedSocialLinks["TWITTER"] && (
+                <p
+                  className="profile__user_bar_left__value"
+                  onClick={() => handleSocialModelClick("TWITTER")}
+                >
+                  TWITTER
+                </p>
+              )}
+              {updatedSocialLinks["FACEBOOK"] && (
+                <p
+                  className="profile__user_bar_left__value"
+                  onClick={() => handleSocialModelClick("FACEBOOK")}
+                >
+                  FACEBOOK
+                </p>
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -336,9 +338,8 @@ const ProfileHeader = ({
         maxWidth="md"
       >
         <form>
-        <DialogTitle>Edit Basic Details</DialogTitle>
-        <DialogContent>
-        
+          <DialogTitle>Edit Basic Details</DialogTitle>
+          <DialogContent>
             <div className="signUp__form_names">
               <div className="signUp__form__page">
                 <TextField
@@ -380,7 +381,7 @@ const ProfileHeader = ({
                   onChange={handleChange}
                   fullWidth
                 />
-              </div>                            
+              </div>
             </div>
             <div className="signUp__form_names">
               <div className="signUp__form__page">
@@ -397,9 +398,9 @@ const ProfileHeader = ({
                   InputLabelProps={{ shrink: statuss ? true : false }}
                 >
                   {statuss.map((info) => (
-                <MenuItem value={info.value}>{info.name}</MenuItem>
-              ))}
-                  </TextField>
+                    <MenuItem value={info.value}>{info.name}</MenuItem>
+                  ))}
+                </TextField>
               </div>
               <div className="signUp__form__page modal">
                 <label htmlFor="Profile Visibleto Alumnae Community">
@@ -425,14 +426,16 @@ const ProfileHeader = ({
                   disabled={true}
                   fullWidth
                 />
-              </div>                            
+              </div>
             </div>
-            <div className="ems">This is used as your login username and cannot be modified.</div>
-            </DialogContent>
-        
-            <DialogTitle>Social Profile URLs</DialogTitle>
-            
-            <DialogContent>
+            <div className="ems">
+              This is used as your login username and cannot be modified.
+            </div>
+          </DialogContent>
+
+          <DialogTitle>Social Profile URLs</DialogTitle>
+
+          <DialogContent>
             <div className="social__form_names">
               <div className="social__form__page">
                 <div className="modal">
@@ -485,15 +488,15 @@ const ProfileHeader = ({
                   fullWidth
                 />
               </div>
-            </div>           
-            </DialogContent>            
-            </form>
-        
+            </div>
+          </DialogContent>
+        </form>
+
         <DialogActions>
           <Button onClick={() => setOpenModel(false)} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="primary">
+          <Button onClick={handleSubmit} color="primary" variant="contained">
             Save
           </Button>
         </DialogActions>
