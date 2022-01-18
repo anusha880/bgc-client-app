@@ -64,7 +64,7 @@ const CommunityCreateDailog = ({
         PaperProps={{
           style: {
             width: "780px",
-            height: "600px",
+            height: "550px",
             maxWidth: "780px",
             borderRadius: "4px",
             backgroundColor: "#FFFFFF",
@@ -74,15 +74,15 @@ const CommunityCreateDailog = ({
         }}
       >
         <DialogTitle>Create a Community</DialogTitle>
-        <DialogContent>
-          <form>
+        <DialogContent style={{padding : "0 20px 0px",marginRight:20}} >
+         
             <TextField
               className="communityCreate__form__page"
               required
               // error={!!errorMessage.firstName}
               name="name"
               id="outlined-required"
-              label="Create Community"
+              label="Community Name"
               value={name}
               variant="outlined"
               onChange={handleChange}
@@ -128,24 +128,25 @@ const CommunityCreateDailog = ({
               </Alert>
             </div> */}
             <div className="__create__community__agree__div">
-              <InfoOutlinedIcon />
+              &nbsp;&nbsp;
+              <InfoOutlinedIcon/>&nbsp;&nbsp;            
               <span className="create__community__agree__message">
                 By proceeding to create this community, you agree to abide by
                 the guidelines established for the Black Girls Code Alumnae
                 Portal.
               </span>
             </div>
-          </form>
-        </DialogContent>
+         
+          </DialogContent>  
 
-        <DialogActions>
+        <DialogActions style={{margin :  25}}>
           <Button onClick={() => setOpenModel(false)} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="primary">
+          <Button onClick={handleSubmit} color="primary" variant="contained">
             Create
           </Button>
-        </DialogActions>
+        </DialogActions>              
       </Dialog>
     </div>
   );
