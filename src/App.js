@@ -72,7 +72,7 @@ class App extends Component {
                 <Route exact path="/directory" component={BGCDirectoryHome} />
 
                 <Route path="/userprofile/:userId" component={BGCProfileHome} />
-                <AuthRoute exact path="/portalHome" component={PortalHome} />
+                <AuthRoute exact path="/portalHome" component={BGCProfileHome} />
                 <AuthRoute
                   exact
                   path="/communityHome"

@@ -9,7 +9,7 @@ import ModelWindow from "./ModelWindow";
 const Experience = ({ user: { userInfo, selectedMember } ,readOnlyFlow, editUserDetails }) => {
   const [profile, setProfile] = useState({});
   const [openModel, setOpenModel] = useState(false);
-  const [modeType, setModeType] = useState('add');
+  const [modeType, setModeType] = useState('Add');
   const [errorMessage,setErrormessage] = useState({ });
   const handleChange = (event) => {        
       
@@ -36,10 +36,11 @@ const Experience = ({ user: { userInfo, selectedMember } ,readOnlyFlow, editUser
 
   const handleAddModel = (value, mode) => {
     setOpenModel(value);
-    setModeType('add');
-    setProfile({})
+    setModeType('Add');
+    setProfile({});
   }
   const handleModelChange = (value, item, index) => {
+    setModeType('Edit');
     const { jobTtile, company, description, department, startMonth, startYear, endMonth, endYear,location
     } = item;
 
@@ -56,7 +57,6 @@ const Experience = ({ user: { userInfo, selectedMember } ,readOnlyFlow, editUser
         itemIndex : index
     });
     setOpenModel(value);
-    setModeType('edit');
   };
   const handleSubmit = () => {
     const {
@@ -174,7 +174,7 @@ const Experience = ({ user: { userInfo, selectedMember } ,readOnlyFlow, editUser
       {educationInfo}
       
       <ModelWindow handleChange={handleChange} profile={profile} setOpenModel= {setOpenModel} openModel={openModel} 
-      handleSubmit={handleSubmit} errorMessage={errorMessage} type ="workforce" />
+      handleSubmit={handleSubmit} errorMessage={errorMessage} type ="workforce" modeType={modeType}/>
     </div>
   );
 };

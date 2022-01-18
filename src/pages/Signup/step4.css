@@ -57,6 +57,19 @@
 .frms {
   margin-top: 10px;
 }
+
+.frms textarea{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  min-height: 150px;
+  max-height: 250px;
+}
+
+.frms textarea::-webkit-scrollbar{
+  width: 0;
+  display: 0;
+}
+
 .step4__section_Month_mdw {
   margin: 0px 80px 10px 0px !important;
   min-width: 125px !important;

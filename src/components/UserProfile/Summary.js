@@ -11,9 +11,10 @@ import "./BGCProfileHome.css";
 
 
 const Summary = ({ user: { userInfo, selectedMember },readOnlyFlow, editUserDetails }) => {
-    const [profile, setProfile] = useState({updatedDescription:userInfo.summary});
+  const [profile, setProfile] = useState({updatedDescription:userInfo.summary});
   const [openModel, setOpenModel] = useState(false);
-  
+  const [modeType, setModeType] = useState('Add');
+
   const handleChange = (event) => {
     setProfile({ ...profile , [event.target.name]: event.target.value, });
   };
@@ -75,7 +76,10 @@ const Summary = ({ user: { userInfo, selectedMember },readOnlyFlow, editUserDeta
         <div className="Summary_add__icon">
        <EditIcon color="#6200EE" onClick={() => setOpenModel(true)} />
        </div>
-       <span onClick={() => setOpenModel(true)}> EDIT </span>
+       <span onClick={() =>{
+          setOpenModel(true);
+          setModeType('Edit');
+       }}> EDIT </span>
        </div>
 
           
@@ -86,7 +90,10 @@ const Summary = ({ user: { userInfo, selectedMember },readOnlyFlow, editUserDeta
             <AddIcon color="#6200EE" onClick={() => setOpenModel(true)} />
               
               </div>
-              <span onClick={() => setOpenModel(true)}> ADD </span>
+              <span onClick={() =>{
+                setOpenModel(true);
+                setModeType('Add');
+              }}> ADD </span>
              
             </div>
           )}
@@ -100,7 +107,7 @@ const Summary = ({ user: { userInfo, selectedMember },readOnlyFlow, editUserDeta
         
         
         <ModelWindow className="text_field_outline" variant="outlined" handleChange={handleChange} profile={profile} setOpenModel= {setOpenModel} openModel={openModel} 
-        handleSubmit={handleSubmit} type ="summary" />
+        handleSubmit={handleSubmit} type ="summary" modeType={modeType}/>
       </div>);
 }
 

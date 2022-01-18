@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -23,6 +23,7 @@ const ModelWindow = ({
   handleSubmit,
   type,
   errorMessage,
+  modeType,
 }) => {
   const {
     updatedStartMonth,
@@ -34,13 +35,13 @@ const ModelWindow = ({
   } = profile;
   const [isPresent, setIsPresent] = useState(false);
   let items = [...experience];
-  let heading = "Add your experience details..";
+  let heading = `${modeType} Experience`;
   if (type === "education") {
     items = [...educations];
-    heading = "Add your education details..";
+    heading = `${modeType} Education`;
   } else if (type === "summary") {
     items = [];
-    heading = "Add your summary";
+    heading = `${modeType} Summary`;
   }
   const onPresentChange = (value) => {
     setIsPresent(value);
@@ -51,6 +52,10 @@ const ModelWindow = ({
     //   target:{name:'updatedEndYear',value}
     // })
   };
+  const ref = useRef();
+
+  console.log(ref.current);
+
   return (
     <div>
       <Dialog
@@ -60,7 +65,7 @@ const ModelWindow = ({
         maxWidth="sm"
       >
         <DialogTitle>{heading}</DialogTitle>
-        <DialogContent>
+        <DialogContent style={{ marginBottom: "0px", paddingBottom: "0px" }}>
           <form>
             {items.map((item) => (
               <div className="startDateSelection_Exp">
@@ -82,14 +87,19 @@ const ModelWindow = ({
                 <TextField
                   id="outlined-required"
                   name="updatedDescription"
-                  label="Short description about your work"
+                  // label="Short description about your work"
+                  label={`${
+                    type === "summary"
+                      ? "Summary"
+                      : "Short description about your work"
+                  }`}
                   variant="outlined"
                   multiline
-                  rows="3"
                   value={updatedDescription}
                   onChange={handleChange}
                   fullWidth
                   className="frms"
+                  ref={ref}
                 />
               </div>
             )}
@@ -205,7 +215,13 @@ const ModelWindow = ({
             )}
           </form>
         </DialogContent>
-        <DialogActions sx={{ paddingRight: "25px" }}>
+        <DialogActions
+          sx={{
+            paddingRight: "25px",
+            paddingTop: "1.2rem",
+            paddingBottom: "1.2rem",
+          }}
+        >
           <Button onClick={() => setOpenModel(false)} color="primary">
             Cancel
           </Button>

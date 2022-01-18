@@ -14,7 +14,7 @@ const Education = ({
 }) => {
   const [profile, setProfile] = useState({});
   const [openModel, setOpenModel] = useState(false);
-  const [modeType, setModeType] = useState("add");
+  const [modeType, setModeType] = useState("Add");
   const [errorMessage,setErrormessage] = useState({ });
   const handleChange = (event) => {      
       
@@ -40,7 +40,7 @@ const Education = ({
   };
   const handleAddModel = (value, mode) => {
     setOpenModel(value);
-    setModeType("add");
+    setModeType("Add");
     setProfile({});
   };
   const handleModelChange = (value, item, index) => {
@@ -64,7 +64,7 @@ const Education = ({
       itemIndex: index,
     });
     setOpenModel(value);
-    setModeType("edit");
+    setModeType("Edit");
   };
 
   //const handleModelChange = (value) => {
@@ -210,6 +210,7 @@ const Education = ({
         handleSubmit={handleSubmit}
         type="education"
         errorMessage={errorMessage}
+        modeType={modeType}
       />
     </div>
   );

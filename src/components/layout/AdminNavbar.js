@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useHistory } from "react-router-dom";
-import { connect } from "react-redux";
-
+import { connect,useDispatch } from "react-redux";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -11,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import BGCProfileHome from "../UserProfile/BGCProfileHome";
 import { logoutUser, updateTabIndex } from "../../redux/actions/userActions";
 import { getRoutes } from "../../util/constant";
-
+import "./AdminNavbar.css";
 import "./Navigation.css";
 import { Box } from "@mui/system";
 import { Toolbar, IconButton, Menu, MenuItem } from "@mui/material";
@@ -25,6 +26,19 @@ const AdminNavbar = ({
   updateTabIndex,
 }) => {
   const { firstName, lastName } = userInfo;
+  const history = useHistory();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogOut = () => {
+    logoutUser();
+  };
 
   const a11yProps = (index) => {
     return {
@@ -69,9 +83,35 @@ const AdminNavbar = ({
           {...a11yProps(1)}
         />
         <Tab
-          label="Logout"
+          label={
+            <>
+              <Button
+                id="basic-button"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+                className="admin_button"
+                style={{ color: "white", fontSize:'15px' }}
+              >
+                {`${firstName} ${lastName}`} {open ? <ArrowDropDownIcon/>: <ArrowRightIcon style={{color: '#252525'}}/>}
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+                className="admin_menu"
+              >
+                <MenuItem onClick={handleClose}>Change Password</MenuItem>
+                <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
+              </Menu>
+            </>
+          }
           className="header__bar_item"
-          onClick={logoutUser}
           {...a11yProps(2)}
         />
       </Tabs>
