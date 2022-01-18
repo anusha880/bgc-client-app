@@ -13,6 +13,7 @@ import {
   CircularProgress,
   Paper,
   Card,
+  TableSortLabel,
 } from "@mui/material";
 
 import { Search } from "@material-ui/icons";
@@ -23,6 +24,7 @@ import {
   useSortBy,
 } from "react-table";
 import TablePaginationActions from "./TablePaginationActions";
+import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 
 export function DataTable({
   columns,
@@ -72,7 +74,13 @@ export function DataTable({
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between",alignItems: 'center' }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <TextField
           sx={{ p: 3 }}
           label={searchPlaceholder}
@@ -102,8 +110,18 @@ export function DataTable({
           {headerGroups.map((headerGroup) => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <TableCell {...column.getHeaderProps()}>
-                  <div style={{ padding: 16 }}>{column.render("Header")}</div>
+                <TableCell
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  style={{ cursor: "pointer" }}
+                >
+                  {column.render("Header")}
+                  {column.sortable ? (
+                    <TableSortLabel
+                      active={column.isSorted}
+                      direction={column.isSortedDesc ? "desc" : "asc"}
+                      IconComponent={ArrowDropDown}
+                    />
+                  ) : null}
                 </TableCell>
               ))}
             </TableRow>

@@ -703,6 +703,8 @@ const getAllCommunities = async (user) => {
       members: doc.data().members,
       image: doc.data().imageUrl,
       createdMember: doc.data().createdMember,
+      createdAt: doc.data().createdAt,
+      status: doc.data().status
     });
   });
   return communties;

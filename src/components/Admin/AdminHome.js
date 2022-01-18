@@ -24,6 +24,7 @@ import {
 } from "../../firebaseActions/dataServices";
 import { getAllUsersCommunity } from "../../redux/actions/dataActions";
 import { SET_REPORTED_DATA } from "../../redux/types";
+import Communities from "./Communities";
 
 const StyledTabs = styled(Tabs)`
   .MuiTabs-indicator {
@@ -158,7 +159,7 @@ const AdminHomePage = ({
           <MembersPage />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          COMMUNITIES
+          <Communities/>
         </TabPanel>
         <TabPanel value={value} index={3}>
           <AdminsPage />

@@ -201,6 +201,15 @@ export const getStatus = (status) => {
   return mapping[status] || "";
 };
 
+export const getCommunityStatus = (status) => {
+  const mapping = {
+    active: "Active",
+    inactive: "Closed",
+  };
+
+  return mapping[status] || "";
+};
+
 export const getStatusColor = (status) => {
   const mapping = {
     active: "#008767",

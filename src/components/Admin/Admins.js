@@ -51,15 +51,16 @@ function AdminsPage({ user }) {
       {
         Header: "Name",
         accessor: "name",
-        filterable: true,
         sortable: true,
       },
       {
         Header: "Email",
         accessor: "email",
+        sortable: true,
       },
       {
         Header: "Status",
+        sortable: true,
         Cell: ({ row }) => {
           return (
             <p style={{ color: getStatusColor(row.original.status) }}>
