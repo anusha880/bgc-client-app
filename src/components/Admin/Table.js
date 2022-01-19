@@ -112,7 +112,7 @@ export function DataTable({
               {headerGroup.headers.map((column) => (
                 <TableCell
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  style={{ cursor: "pointer" }}
+                  style={{padding: 10}}
                 >
                   {column.render("Header")}
                   {column.sortable ? (

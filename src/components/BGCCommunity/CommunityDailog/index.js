@@ -33,7 +33,7 @@ const CommunityCreateDailog = ({
   };
   const handleSubmit = () => {
     const { name, description, tags } = commnunityProfile;
-    const { email, firstName, imageUrl } = userInfo;
+    const { email, firstName, lastName, imageUrl } = userInfo;
     const noImg = "no-img.png";
     const newCommunity = {
       name,
@@ -43,6 +43,7 @@ const CommunityCreateDailog = ({
       members: [{ email, firstName, imageUrl }],
       createdAt: new Date().toISOString(),
       createdMember:email,
+      createdUsername: `${firstName} ${lastName}`
     };
     createCommunity(newCommunity, history);
     setOpenModel(false);

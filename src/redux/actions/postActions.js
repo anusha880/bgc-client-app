@@ -24,8 +24,9 @@ import axios from 'axios';
 import { getPostsOfCommunity ,getAllPostsOfUser} from './dataActions';
 import { addNewPost,updateEditPost,deletePost, getAPost, getUserProfileInfo, updateCommunityImage  } from '../../firebaseActions/dataServices';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "../../firebase";
+import { storage , db} from "../../firebase";
 import { editUserDetails } from '../actions/userActions';
+import { updateDoc, doc } from '@firebase/firestore';
 
 
 export const getPostDetails = (postId) => async (dispatch) => {
@@ -172,6 +173,9 @@ export const addAPost = (newPost) => async (dispatch) => {
   dispatch({ type: LOADING_UI });
   try {
     const result = await addNewPost(newPost.postPayload);
+    const communityId = newPost.postPayload.communityId
+    const docRef = doc(db, "community", communityId);
+    const docSnap = await updateDoc(docRef,{lastPostAt: new Date().toISOString()});
       dispatch(getPostsOfCommunity);
       return dispatch(clearErrors());
   } catch(err)  {

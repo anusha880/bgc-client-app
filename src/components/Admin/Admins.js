@@ -74,7 +74,7 @@ function AdminsPage({ user }) {
         accessor: "lastLogin",
       },
       {
-        Header: "Actions",
+        id: "Actions",
         Cell: ({ row }) => {
           const newStatus =
             row.original.status == "active"
@@ -88,7 +88,7 @@ function AdminsPage({ user }) {
                 setShowDialog(true);
               }}
             >
-              <MoreVert />
+              <MoreVert sx={{color: 'black'}}/>
             </ActionsMenu>
           );
         },

@@ -703,7 +703,9 @@ const getAllCommunities = async (user) => {
       members: doc.data().members,
       image: doc.data().imageUrl,
       createdMember: doc.data().createdMember,
+      createdUsername: doc.data().createdUsername,
       createdAt: doc.data().createdAt,
+      lastPostAt: doc.data().lastPostAt,
       status: doc.data().status
     });
   });

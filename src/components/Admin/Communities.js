@@ -62,12 +62,15 @@ function CommunitiesPage({ user }) {
       },
       {
         Header: "Owner",
-        accessor: "createdMember",
+        accessor: "createdUsername",
         sortable: true,
+        Cell: ({ row }) => {
+          return <Typography color="primary">{row.original.createdUsername}</Typography>;
+        },
       },
       {
         Header: "Members",
-        accessor: 'members.length',
+        accessor: "members.length",
         sortable: true,
         Cell: ({ row }) => {
           return <div>{row.original.members.length}</div>;
@@ -75,7 +78,7 @@ function CommunitiesPage({ user }) {
       },
       {
         Header: "Status",
-        accessor: 'status',
+        accessor: "status",
         sortable: true,
         Cell: ({ row }) => {
           return (
@@ -98,7 +101,19 @@ function CommunitiesPage({ user }) {
         },
       },
       {
-        Header: "Actions",
+        Header: "Last Post",
+        accessor: "lastPostAt",
+        sortable: true,
+        Cell: ({ row }) => {
+          return (
+            <div>
+              {row.original.lastPostAt && format(new Date(row.original.lastPostAt), "MMM dd, yyyy")}
+            </div>
+          );
+        },
+      },
+      {
+        id: "actions",
         Cell: ({ row }) => {
           const newStatus =
             row.original.status == "active"
@@ -112,7 +127,7 @@ function CommunitiesPage({ user }) {
                 setShowDialog(true);
               }}
             >
-              <MoreVert />
+              <MoreVert sx={{ color: "black" }} />
             </ActionsMenu>
           );
         },
@@ -169,7 +184,13 @@ function CommunitiesPage({ user }) {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: 'center' }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <h2>Communities</h2>
         <div>{getActiveInactiveCommunities}</div>
       </div>
