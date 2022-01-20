@@ -24,7 +24,7 @@ import axios from 'axios';
 import { getPostsOfCommunity ,getAllPostsOfUser} from './dataActions';
 import { addNewPost,updateEditPost,deletePost, getAPost, getUserProfileInfo, updateCommunityImage  } from '../../firebaseActions/dataServices';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage , db} from "../../firebase";
+import { storage, db } from "../../firebase";
 import { editUserDetails } from '../actions/userActions';
 import { updateDoc, doc } from '@firebase/firestore';
 
@@ -103,7 +103,7 @@ export const uploadCommunityProfileImage =
         }
       );
     }else {     
-      dispatch(updateCommunityImage(currentCommunityId, ""));
+      updateCommunityImage(currentCommunityId, "");
       dispatch({ type: CLEAR_ERRORS });
       return dispatch(clearErrors()); 
     }

@@ -46,6 +46,32 @@ const CommunityHome = ({
         let communityData = {};
         if (docSnap.exists()) {
           communityData.community = { ...docSnap.data(), communityId: currentCommunityId };
+
+          if (communityData.community.members) {
+            let emailArray = [];
+            let communityMembers =[];
+            communityData.community.members.map((item) => { emailArray.push(item.email)});
+  
+             const userRef = query(
+               collection(db, "users"),
+               orderBy("firstName", "asc")
+             );
+               onSnapshot(userRef, (uersSnapshot) => { 
+                uersSnapshot.forEach((doc) => {
+                  if(doc.data().email && emailArray.includes(doc.data().email)){
+                  communityMembers.push({
+                    firstName: doc.data().firstName,
+                    lastName: doc.data().lastName,
+                    email: doc.data().email,
+                    imageUrl: doc.data().imageUrl,
+                    headLine: doc.data().headLine,
+                   });
+                  }
+                });  
+             
+                communityData.community.members = communityMembers ; //Constructed Members Assign
+              }); 
+           }
           const postRef = query(collection(db, "posts"),
             where("communityId", "==", currentCommunityId),
             orderBy("createdAt", "desc"));
