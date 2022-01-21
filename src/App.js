@@ -31,7 +31,6 @@ import AdminAuthRoute from "./util/AdminAuthRoute";
 import { AdminHome } from "./components/Admin/AdminHome";
 import Navigation from "./components/layout/Navigation";
 import Navbar from "./components/layout/Navigation";
-
 const theme = createTheme(themeObject);
 
 axios.defaults.baseURL =
@@ -72,7 +71,7 @@ class App extends Component {
                 <Route exact path="/directory" component={BGCDirectoryHome} />
 
                 <Route path="/userprofile/:userId" component={BGCProfileHome} />
-                <AuthRoute exact path="/portalHome" component={BGCProfileHome} />
+                <AuthRoute exact path="/portalHome" component={PortalHome} />
                 <AuthRoute
                   exact
                   path="/communityHome"

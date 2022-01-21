@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Avatar from "@mui/material/Avatar";
 import EditIcon from "@material-ui/icons/Edit";
@@ -35,15 +35,31 @@ const ProfileHeader = ({
   removeMemberToNetwork,
   loading,
 }) => {
+  //profile visibility button
+  const [checked, setChecked] = React.useState(true);
+
+  useEffect(() =>{
+      if(typeof userInfo.profileVisibletoAlumnaeCommunity === "boolean"){
+        setChecked(userInfo.profileVisibletoAlumnaeCommunity);
+      }
+  },[]);
+
+  const handleCheckChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
   const [openModel, setOpenModel] = useState(false);
   const [openSocialModel, setOpenSocialModel] = useState(false);
   const { socialLinks, profileStatus } = userInfo;
+
+  console.log("Userinfo");
+  console.log(userInfo);
 
   const [profile, setProfile] = useState({
     updatedSocialLinks: socialLinks,
     updatedProfileStatus: profileStatus,
   });
-  const [profileVisibility, setProfileVisibility] = useState(false);
+  // const [profileVisibility, setProfileVisibility] = useState(false);
   // const [updatedSocialLinks, setpdatedSocialLinks] = useState({LinkedIn: '', Facebook: '',Twitter:''});
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const handleChange = (event) => {
@@ -136,15 +152,15 @@ const ProfileHeader = ({
         updatedHeadLine !== undefined ? updatedHeadLine : headLine || "",
       email: updatedEmail !== undefined ? updatedEmail : email,
 
-      profileVisibletoAlumnaeCommunity:
-        updatedProfileVisibletoAlumnaeCommunity !== undefined
-          ? updatedProfileVisibletoAlumnaeCommunity
-          : profileVisibletoAlumnaeCommunity || "",
+      // profileVisibletoAlumnaeCommunity:
+      //   updatedProfileVisibletoAlumnaeCommunity !== undefined
+      //     ? updatedProfileVisibletoAlumnaeCommunity
+      //     : profileVisibletoAlumnaeCommunity || "",
+      profileVisibletoAlumnaeCommunity: checked,
       socialLinks: updatedSocialLinks,
       profileStatus: updatedProfileStatus,
     };
     const request = { ...userInfo, ...userDetails };
-
     editUserDetails(request);
     setOpenModel(false);
   };
@@ -406,8 +422,9 @@ const ProfileHeader = ({
                 <label htmlFor="Profile Visibleto Alumnae Community">
                   Profile Visible to Alumnae Community
                   <Switch
+                    checked={checked}
+                    onChange={handleCheckChange}
                     inputProps={{ "aria-label": "controlled" }}
-                    onChange={handleProfileVisibility}
                   />
                 </label>
               </div>
@@ -433,7 +450,15 @@ const ProfileHeader = ({
             </div>
           </DialogContent>
 
-          <DialogTitle>Social Profile URLs</DialogTitle>
+          {/* font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 500 !important;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    letter-spacing: 0.0075em;
+    margin:0;
+    padding: 0; */}
+
+          <h2 style={{fontWeight:"500", fontSize:"1.25rem", lineHeight:"1.6", letterSpacing: "0.0075em",margin:"0px",padding:"0px",paddingLeft:"2rem"}}>Social Profile URLs</h2>
 
           <DialogContent>
             <div className="social__form_names">
@@ -492,7 +517,7 @@ const ProfileHeader = ({
           </DialogContent>
         </form>
 
-        <DialogActions>
+        <DialogActions style={{paddingTop:"0px"}}>
           <Button onClick={() => setOpenModel(false)} color="primary">
             Cancel
           </Button>

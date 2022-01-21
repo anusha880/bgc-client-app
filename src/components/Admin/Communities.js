@@ -12,6 +12,7 @@ import { DataTable } from "./Table";
 import { ActionsMenu } from "./ActionsMenu";
 import { AlertDialogWithActions, AlertInfoDialog } from "./Dialog";
 import { getCommunityStatus, getStatusColor } from "../../util/constant";
+import CommunityDailog from '../BGCCommunity/CommunityDailog';
 
 function CommunitiesPage({ user }) {
   const [data, setData] = useState([]);
@@ -200,9 +201,10 @@ function CommunitiesPage({ user }) {
         loading={loading}
         searchPlaceholder="Search Communities"
         TextFieldFlexComponent={
-          <Button variant="contained" onClick={() => {}}>
-            CREATE A COMMUNITY
-          </Button>
+          // <Button variant="contained" onClick={() => {}}>
+          //   CREATE A COMMUNITY
+          // </Button>
+          <CommunityDailog/>
         }
       />
       <AlertInfoDialog
@@ -221,6 +223,7 @@ function CommunitiesPage({ user }) {
         dialogBody={getDialogBody()}
         dialogTitle={`${getActivateStatus()} Community `}
       />
+      <CommunityDailog/>
     </div>
   );
 }
