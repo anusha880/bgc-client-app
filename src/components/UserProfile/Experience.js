@@ -7,8 +7,11 @@ import { editUserDetails } from "../../redux/actions/userActions";
 import ModelWindow from "./ModelWindow";
 import { formatISO } from "date-fns";
 import {sortProfileItems} from '../../helpers/sortProfileItems';
+import { useLocation } from "react-router-dom";
 
 const Experience = ({
+  user,
+
   user: {
     userInfo,
     userInfo: { profileInfo },
@@ -24,25 +27,34 @@ const Experience = ({
   const [experienceTest, setExpierenceTest] = useState({});
   const [profileInfoConst, setProfileInfoConst] = useState([]);
   const [indexToModal, setIndexToModal] = useState(1);
+  const [currentPath, setCurrentPath] = useState();
+  const location = useLocation();
 
   useEffect(() =>{
-    console.log('PROFILE CAMBIO EN EXPIERENCE');
-    console.log(profile);
-  },[profile]);
+    if(location.pathname === "/userprofile" || location.pathname === "/portalHome"){
+      console.log('MY PROFILE');
+    }else{
+      if(selectedMember && selectedMember.profileInfo){
+        setCurrentExperiences(selectedMember.profileInfo[0].details);
+      }
+    }
+  },[location,selectedMember]);
 
   useEffect(() => {
-    setCurrentExperiences(profileInfo[0].details);
-  }, []);
-
+    if(location.pathname === "/userprofile" || location.pathname === "/portalHome"){
+      setCurrentExperiences(profileInfo[0].details);
+    }
+  }, [location]);
 
   useEffect(() => {
     //Estas son las experiencias actuales
-    console.log("Shooted");
-    setProfileInfoConst([
-      { type: "workforce", details: currentExperiences },
-      profileInfo[1],
-      profileInfo[2],
-    ]);
+    if(location.pathname === "/userprofile" || location.pathname === "/portalHome"){
+      setProfileInfoConst([
+        { type: "workforce", details: currentExperiences },
+        profileInfo[1],
+        profileInfo[2],
+      ]);
+    }
   }, [currentExperiences]);
 
   useEffect(() => {
@@ -54,6 +66,13 @@ const Experience = ({
         newArray[experienceTest.index] = experienceTest.payload;
         setCurrentExperiences([...newArray]);
         setProfile({});
+      }else if(experienceTest.type === "Delete"){
+        const newArray = currentExperiences;
+        const filteredArray = newArray.filter(arrayItem => Object.keys(arrayItem).length > 1);
+        const orderedArray = sortProfileItems(filteredArray);
+        orderedArray.splice(experienceTest.index, 1);
+        setCurrentExperiences(orderedArray);
+        setProfile({});
       }
     }
   }, [experienceTest]);
@@ -63,6 +82,7 @@ const Experience = ({
       const request = { ...userInfo, profileInfo: profileInfoConst };
       editUserDetails(request);
     }
+
   }, [profileInfoConst]);
 
   const handleAddModel = (value, mode) => {
@@ -112,17 +132,11 @@ const Experience = ({
         return (
           <div className="experience__item">
             <div className="experiance__item__body">
-              <h4 className="experience__subheader">{item.jobTtile}</h4>
-              <p className="experience__subheader__p">{item.company}</p>
-              {item.description && (
-                <div className="expwrap">
-                  <p className="experience__description__p">
-                    {item.description}
-                  </p>{" "}
-                </div>
-              )}
+              <h4 className="experience__subheader__title">{item.jobTtile}</h4>
+              <p className="experience__subheader__company">{item.company}</p>
               {item.startMonth && (
-                <p className="experience__subheader__p">
+                <p className="experience__subheader__dates">
+
                   {item.startMonth} {item.startYear} -{" "}
                   {item.endMonth === "Present"
                     ? "Present"
@@ -130,6 +144,13 @@ const Experience = ({
                     ? item.endMonth + " " + item.endYear
                     : "Present"}
                 </p>
+              )}
+              {item.description && (
+                <div className="expwrap">
+                  <p className="experience__subheader__description">
+                    {item.description}
+                  </p>{" "}
+                </div>
               )}
             </div>
             {!readOnlyFlow && (

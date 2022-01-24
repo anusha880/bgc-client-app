@@ -50,6 +50,8 @@ export default function(state = initialState, action) {
         userInfo: action.payload
       };
     case SET_SELECTED_MEMBER: 
+    console.log('SET_SELECTED_MEMBER CALLED');
+    console.log(action.payload);
     return {
       ...state,
       selectedMember: action.payload

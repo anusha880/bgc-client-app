@@ -108,6 +108,8 @@ export const getUserProfileData = () => async (dispatch, getState) => {
 export const getMemberData = (email) => async (dispatch) => {
   try {
     const result = await getMemberDetails(email);
+    console.log('RESULTADO')
+    console.log(result);
     dispatch({
       type: SET_SELECTED_MEMBER,
       payload: result,

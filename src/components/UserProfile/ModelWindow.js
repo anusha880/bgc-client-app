@@ -32,6 +32,28 @@ const ModelWindow = ({
   const [errors, setErrors] = useState({});
   const [btnDisabled, setBtnDisabled] = useState(false);
 
+  const handleDelete = () =>{
+    if (type === "workforce") {
+      setExpierenceTest({
+        type: "Delete",
+        index: indexToModal,
+      });
+    } else if (type === "education") {
+      setEducationTest({
+        type: "Delete",
+        index: indexToModal,
+      });
+    }
+
+    setDates({
+      startMonth: "Jan",
+      startYear: new Date(),
+      endMonth: "Jan",
+      endYear: new Date(),
+    });
+    setOpenModel(false);
+  }
+
   const handleCheckChange = (event) => {
     setChecked(event.target.checked);
   };
@@ -46,7 +68,8 @@ const ModelWindow = ({
     if (modeType === "Edit") {
       setDates({
         ...dates,
-        endMonth: profile.endMonth === "Present" ? "january" : profile.endMonth,
+        endMonth: profile.endMonth === "Present" ? "Jan" : profile.endMonth,
+
         endYear:
           profile.endYear === "Present"
             ? new Date()
@@ -54,9 +77,9 @@ const ModelWindow = ({
       });
     } else {
       setDates({
-        startMonth: "january",
+        startMonth: "Jan",
         startYear: new Date(),
-        endMonth: "january",
+        endMonth: "Jan",
         endYear: new Date(),
       });
     }
@@ -82,7 +105,6 @@ const ModelWindow = ({
     }
   }, [modeType]);
 
-
   const [state, handleInputChange, render] = useForm(initialState);
 
   useEffect(() => {
@@ -91,7 +113,7 @@ const ModelWindow = ({
       setDates({
         startMonth: profile.startMonth,
         startYear: new Date(profile.startYear, 6),
-        endMonth: profile.endMonth === "Present" ? "january" : profile.endMonth,
+        endMonth: profile.endMonth === "Present" ? "Jan" : profile.endMonth,
         endYear:
           profile.endYear === "Present"
             ? new Date()
@@ -102,18 +124,18 @@ const ModelWindow = ({
 
   useEffect(() => {
     const monthsArray = [
-      "january",
-      "february",
-      "march",
-      "april",
-      "may",
-      "june",
-      "july",
-      "august",
-      "september",
-      "october",
-      "november",
-      "december",
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dec",
     ];
     if (Object.keys(dates).length > 0) {
       if (endMonth === "Present") {
@@ -354,9 +376,9 @@ const ModelWindow = ({
         }
 
         setDates({
-          startMonth: "january",
+          startMonth: "Jan",
           startYear: new Date(),
-          endMonth: "january",
+          endMonth: "Jan",
           endYear: new Date(),
         });
         setOpenModel(false);
@@ -375,27 +397,36 @@ const ModelWindow = ({
         <h2>{`${modeType} ${origin}`}</h2>
         {renderContent()}
         <div className="edit__basic__info__btns">
+          <div className="edit__basic__info__deleteBtn">
+            {
+              modeType === "Edit" && (origin === "Education" || origin === "Experience") && (
+                <Button variant="text" onClick={handleDelete}>Delete {origin}</Button>
+              )
+            }
+          </div>
+          <div className="edit__basic__info__cancelSaveBtns">
+            <Button
+              variant="outlined"
+              onClick={() => {
+                if (type === "workforce" || type === "education") {
+                  setProfile({});
+                }
+                setDates({
+                  startMonth: "Jan",
+                  startYear: new Date(),
+                  endMonth: "Jan",
+                  endYear: new Date(),
+                });
+                setOpenModel(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button variant="contained" type="submit" disabled={btnDisabled}>
+              Save
+            </Button>
+          </div>
 
-          <Button
-            variant="outlined"
-            onClick={() => {
-              if (type === "workforce" || type === "education") {
-                setProfile({});
-              }
-              setDates({
-                startMonth: "january",
-                startYear: new Date(),
-                endMonth: "january",
-                endYear: new Date(),
-              });
-              setOpenModel(false);
-            }}
-          >
-            Cancel
-          </Button>
-          <Button variant="contained" type="submit" disabled={btnDisabled}>
-            Save
-          </Button>
         </div>
       </form>
     </Modal>

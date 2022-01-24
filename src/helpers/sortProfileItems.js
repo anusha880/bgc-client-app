@@ -1,5 +1,6 @@
 export const sortProfileItems = (currentArray) => {
-    const monthsArray = ["january","february","march","april","may","june","july","august","september","october","november","december"];
+    const monthsArray = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];
+
     let newArray = currentArray.filter(arrayItem => Object.keys(arrayItem).length > 1);
     let arrayPresent = newArray.filter(arrayItem => arrayItem.endMonth === "Present");
     let arrayRest = newArray.filter(arrayItem => arrayItem.endMonth !== "Present");

@@ -24,7 +24,6 @@ import MyCommunities from "./MyCommunities";
 import { getMemberData } from '../../redux/actions/userActions';
 
 const BGCProfileHome = ({ history, UI, user: { userInfo }, match : { params : { userId } = {} }, members, getMemberData }) => {
-  console.log('userId', userId);
   const [readOnlyFlow, setReadOnlyFlow] = useState(false)
  useEffect(() => {
   if(userId && members && Array.isArray(members) && members.length > 0) {

@@ -353,7 +353,7 @@ const ProfileHeader = ({
         fullWidth
         maxWidth="md"
       >
-        <form>
+        <form className="profile__home__form__modal">
           <DialogTitle>Edit Basic Details</DialogTitle>
           <DialogContent>
             <div className="signUp__form_names">
@@ -458,9 +458,9 @@ const ProfileHeader = ({
     margin:0;
     padding: 0; */}
 
-          <h2 style={{fontWeight:"500", fontSize:"1.25rem", lineHeight:"1.6", letterSpacing: "0.0075em",margin:"0px",padding:"0px",paddingLeft:"2rem"}}>Social Profile URLs</h2>
+          <h2 style={{fontWeight:"500", fontSize:"1.25rem", lineHeight:"1.6", letterSpacing: "0.0075em",margin:"0px",padding:"0px",paddingLeft:"2rem",paddingTop:"10px"}}>Social Profile URLs</h2>
 
-          <DialogContent>
+          <DialogContent style={{padding:"8px 24px"}}>
             <div className="social__form_names">
               <div className="social__form__page">
                 <div className="modal">
