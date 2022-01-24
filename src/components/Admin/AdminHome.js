@@ -25,6 +25,7 @@ import {
 import { getAllUsersCommunity } from "../../redux/actions/dataActions";
 import { SET_REPORTED_DATA } from "../../redux/types";
 import Communities from "./Communities";
+import ReportsPage from "./ReportsPage";
 
 const StyledTabs = styled(Tabs)`
   .MuiTabs-indicator {
@@ -81,12 +82,25 @@ const AdminHomePage = ({
       where("isReportPresent", "==", true)
     );
     const unsubPostSnap = onSnapshot(postRef, (postsSnapshot) => {
+      console.log(postsSnapshot);
       postsSnapshot.forEach((doc) => {
+        console.log(doc.id);
         reportsData.push({
-          userHandle: doc.data().userHandle,
+          postId: doc.id,
+          status: doc.data().adminAction,
+          reason: doc
+            .data()
+            .reports.map((a) => a.type)
+            .toString(),
+          timesReported: doc.data().reports.length,
+          userName: doc.data().userName,
           body: doc.data().body,
           reports: doc.data().reports,
-          createdAt: doc.data().createdAt,
+          lastReportedAt: doc.data().lastReportedAt,
+          sharedDocumentURL: doc.data().sharedDocumentURL,
+          sharedVideo: doc.data().sharedVideo,
+          docType: doc.data().docType,
+          lastAction: doc.data().lastAction,
         });
       });
 
@@ -153,13 +167,13 @@ const AdminHomePage = ({
       </Box>
       <Box>
         <TabPanel value={value} index={0}>
-          REPORTED CONTENT
+          <ReportsPage />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <MembersPage />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Communities/>
+          <Communities />
         </TabPanel>
         <TabPanel value={value} index={3}>
           <AdminsPage />

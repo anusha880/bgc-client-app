@@ -219,3 +219,21 @@ export const getStatusColor = (status) => {
 
   return mapping[status] || "auto";
 };
+export const getActionforPending = [
+  { name: "No Issue", value: "No Issue" },
+  { name: "Remove", value: "Remove" },
+];
+export const getActionforRemovebyAdmin = [
+  { name: "No Issue", value: "No Issue" },
+];
+
+export const getpostStatus = (status) => {
+  const mapping = {
+    noissue: "Non Issue",
+    pending: "Pending",
+    removedbyadmin: "Removed by admin",
+    removedbysystem: "Removed by system",
+  };
+
+  return mapping[status] || "";
+};

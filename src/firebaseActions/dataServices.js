@@ -12,7 +12,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import Fuse from "fuse.js";
-
+import { format } from "date-fns";
 import {
   ref,
   uploadBytesResumable,
@@ -498,6 +498,8 @@ const addAReportToPost = async (postId, currentReport) => {
       reports: filterReports,
       status: docSnap.data().status || "active",
       isReportPresent: true,
+      lastReportedAt: format(new Date(), "MMM dd, yyyy hh:mm a "),
+      adminAction: "pending",
     });
     return result;
   } else {
@@ -706,7 +708,7 @@ const getAllCommunities = async (user) => {
       createdUsername: doc.data().createdUsername,
       createdAt: doc.data().createdAt,
       lastPostAt: doc.data().lastPostAt,
-      status: doc.data().status
+      status: doc.data().status,
     });
   });
   return communties;
@@ -745,6 +747,24 @@ const getMemberDetails = async (email) => {
   }
 };
 
+const addadminActionToPost = async (post) => {
+  if (post.postId) {
+    const docRef = doc(db, "posts", post.postId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const result = await updateDoc(docRef, {
+        reports: post.reports,
+        status: post.status,
+        adminAction: post.adminAction,
+        lastAction: post.lastAction,
+      });
+      return result;
+    } else {
+      console.log("No such post!");
+    }
+  } else return null;
+};
+
 export {
   getAllRecommenededCommunities,
   getAllUserMemberCommunityPost,
@@ -772,4 +792,5 @@ export {
   addNewCommunity,
   updateCommunityImage,
   getMemberDetails,
+  addadminActionToPost,
 };

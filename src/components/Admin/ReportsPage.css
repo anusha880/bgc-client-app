@@ -1,0 +1,43 @@
+.img {
+    height: 200px;
+    width: 250px;
+    object-fit: fill;
+    margin: "0px 0px 0px 21px";
+  }
+  .reactPlayer_div {
+    /* height: 260px !important;
+    width: 370px !important; */
+    height: 200px !important;
+    width: 250px !important;
+    object-fit: fill;
+  }
+  .box_container {
+    border-color: #dcdee1 !important;
+    border-style: solid !important;
+    width: 291px !important;
+    height: 71px !important;
+    padding: 0 20px 20px 20px !important;
+    justify-content: space-between;
+    display: flex !important;
+    border-width: 1px !important;
+  }
+  .main_container {
+    display: flex !important;
+    align-items: center !important;
+  }
+  .box_container_pending{
+    border-color: #dcdee1 !important;
+    background-color: rgba(234,112,11,0.1) !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+    width: 291px !important;
+    height: 71px !important;
+    padding: 0 20px 20px 20px !important;
+    justify-content: space-between;
+    display: flex !important;
+    box-shadow: 1 !important;
+  }
+  .toolTip{
+    height:18px !important;
+    width: 18px !important;
+  }
