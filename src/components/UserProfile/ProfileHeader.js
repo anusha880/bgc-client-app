@@ -6,7 +6,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import AddLinkIcon from "@mui/icons-material/AddLink";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
@@ -190,6 +189,8 @@ const ProfileHeader = ({
   let addedToMyNetwork = false;
 
   let myNetworks = [];
+  let defaultImgUrl = "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
+   
   if (readOnlyFlow) {
     const {
       firstName,
@@ -247,12 +248,13 @@ const ProfileHeader = ({
               <Avatar
                 alt="Remy Sharp"
                 className="profile__header__image"
-                src={info.imageUrl}
+                src={info.imageUrl ? info.imageUrl : defaultImgUrl}
               />
               {!readOnlyFlow && !loading && (
                 <ProfilePictureChange
                   userInfo={userInfo}
                   imageUrl={info.imageUrl}
+                  defaultImgUrl={defaultImgUrl}
                 />
               )}
             </div>

@@ -56,14 +56,18 @@ const CommunityHome = ({
                collection(db, "users"),
                orderBy("firstName", "asc")
              );
+             let ImgUrl = "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
                onSnapshot(userRef, (uersSnapshot) => { 
+                if (doc.data().imageUrl) {
+                  ImgUrl = doc.data().imageUrl;
+                } 
                 uersSnapshot.forEach((doc) => {
                   if(doc.data().email && emailArray.includes(doc.data().email)){
                   communityMembers.push({
                     firstName: doc.data().firstName,
                     lastName: doc.data().lastName,
                     email: doc.data().email,
-                    imageUrl: doc.data().imageUrl,
+                    imageUrl: ImgUrl,
                     headLine: doc.data().headLine,
                    });
                   }

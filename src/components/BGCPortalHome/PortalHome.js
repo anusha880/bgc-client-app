@@ -69,6 +69,8 @@ const CommunityHome = ({
 
   useEffect(() => {
     const { email } = userInfo;
+    let ImgUrl = "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
+  
     const firebaseStorage = getStorage();
     const q = query(collection(db, "community"), orderBy("createdAt", "desc"));
     const unsubCommunitySnap = onSnapshot(q, (querySnapshot) => {
@@ -84,6 +86,7 @@ const CommunityHome = ({
         }
       });
       if (selectedCommunityIds.length > 0) {
+        selectedCommunityIds=selectedCommunityIds.slice(0,8);
         const postRef = query(collection(db, "posts"), 
         where("communityId", "in", selectedCommunityIds),
           orderBy("createdAt", "desc"));
@@ -103,11 +106,14 @@ const CommunityHome = ({
                   fileName = httpsReference.name;
                 }
                 if (item.data().status && item.data().status !== "inactive") {
+                  if(item.data().userImage){ 
+                    ImgUrl = item.data().userImage;
+                  }
                   usersPost.push({
                     body: item.data().body,
                     createdAt: item.data().createdAt,
                     userHandle: item.data().userHandle,
-                    userImage: item.data().userImage,
+                    userImage: ImgUrl,
                     userName: item.data().userName,
                     sharedImg: item.data().sharedImg,
                     sharedVideo: item.data().sharedVideo,

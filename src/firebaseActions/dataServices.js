@@ -34,17 +34,25 @@ const getAllRecommenededCommunities = async (user) => {
     const interests = [...usersInterests[0].details[0].interestFields];
     const chapter = usersInterests[0].details[0].chapter;
     const querySnapshot = await getDocs(collection(db, "community"));
+    let ImgUrl =
+    "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
+ 
     querySnapshot.forEach((item) => {
       if (
         item.data().members &&
         !item.data().members.filter((item) => item.email === email).length > 0
       ) {
+
+        if (doc.data().imageUrl) {
+          ImgUrl = doc.data().imageUrl;
+        }
+
         communityCollection.push({
           communityId: item.id,
           name: item.data().name,
           description: item.data().description,
           members: item.data().members,
-          image: item.data().imageUrl,
+          image: ImgUrl,
           tags: item.data().tags,
           createdMember: item.data().createdMember,
         });
@@ -169,17 +177,24 @@ const myCommunity = async (user) => {
   const communityRef = collection(db, "community");
   const q = query(communityRef, orderBy("createdAt", "desc"));
   const querySnapshot = await getDocs(q);
+  let ImgUrl =
+  "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
+
   querySnapshot.forEach((doc) => {
     if (
       doc.data().members &&
       doc.data().members.filter((item) => item.email === email).length > 0
     ) {
+      if (doc.data().imageUrl) {
+        ImgUrl = doc.data().imageUrl;
+      }
+
       communties.push({
         communityId: doc.id,
         name: doc.data().name,
         description: doc.data().description,
         members: doc.data().members,
-        image: doc.data().imageUrl,
+        image: ImgUrl,
         createdMember: doc.data().createdMember,
         status: doc.data().status,
       });
@@ -535,8 +550,13 @@ const getAllMembers = async (user) => {
     const userRef = collection(db, "users");
     const q = query(userRef, orderBy("firstName", "asc"));
     const usersSnapshot = await getDocs(q);
+    let ImgUrl =  "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
+
     usersSnapshot.forEach((doc) => {
       if (doc.data().email !== email) {
+        if (doc.data().imageUrl) {
+          ImgUrl = doc.data().imageUrl;
+        }
         users.push({
           memberId: doc.data().userId,
           name: [doc.data().firstName, doc.data().lastName].join(" "),
@@ -544,7 +564,7 @@ const getAllMembers = async (user) => {
           lastName: doc.data().lastName,
           email: doc.data().email,
           createdAt: doc.data().createdAt,
-          imageUrl: doc.data().imageUrl,
+          imageUrl: ImgUrl,
           headLine: doc.data().headLine,
           lastLogin: doc.data().lastLogin,
           status: doc.data().status,
@@ -601,6 +621,7 @@ export const handleActivateDeactivateProfile = async (selectedUser) => {
     return { ...docSnap.data(), ...updateData };
   }
 };
+
 
 export const handleActivateDeactivateCommunity = async (selectedCommunity) => {
   const { communityId, status } = selectedCommunity;
@@ -709,16 +730,22 @@ const updateUserDetails = async (userDetails) => {
 const getAllCommunities = async (user) => {
   let communties = [];
   const { email } = user;
+  let ImgUrl =
+    "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
   const communityRef = collection(db, "community");
   const q = query(communityRef, orderBy("createdAt", "desc"));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
+    if (doc.data().imageUrl) {
+      ImgUrl = doc.data().imageUrl;
+    }
+
     communties.push({
       communityId: doc.id,
       name: doc.data().name,
       description: doc.data().description,
       members: doc.data().members,
-      image: doc.data().imageUrl,
+      image: ImgUrl,
       createdMember: doc.data().createdMember,
       createdUsername: doc.data().createdUsername,
       createdAt: doc.data().createdAt,

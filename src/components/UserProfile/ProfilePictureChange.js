@@ -11,7 +11,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Avatar from "@mui/material/Avatar";
 import PhotoCameraRoundedIcon from "@mui/icons-material/PhotoCameraRounded";
 
-const ProfilePictureChange = ({ uploadProfileImage, userInfo, imageUrl }) => {
+const ProfilePictureChange = ({ uploadProfileImage, userInfo, imageUrl ,defaultImgUrl }) => {
   const [openModel, setOpenModel] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [imgUrl, setImageUrl] = useState();
@@ -95,7 +95,7 @@ const ProfilePictureChange = ({ uploadProfileImage, userInfo, imageUrl }) => {
               <Avatar
                 alt="Remy Sharp"
                 className="profile__header__image"
-                src={imgUrl}
+                src={imgUrl ? imgUrl : defaultImgUrl}
               />
               <div>
                 <div style={{ marginBottom: 10 }}>

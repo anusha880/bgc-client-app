@@ -12,13 +12,15 @@ import Typography from '@mui/material/Typography';
 
 const Leftside = ({ user: {userInfo} }) => {
     const { firstName, lastName, imageUrl, headLine } = userInfo;
+    let defaultImgUrl = "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
+   
     return (
         <div className="Container">
             <div className="userCardArt">
             <Avatar
                 alt="Remy Sharp"
                 className="portal__header__image"
-                src={ imageUrl }
+                src={ imageUrl ? imageUrl: defaultImgUrl }
               />
               <label className="user__label">{firstName} {lastName} </label>
               { headLine && <p className="user__role">{headLine}</p> }
