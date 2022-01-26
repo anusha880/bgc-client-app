@@ -499,7 +499,7 @@ const mapStateToProps = (state) => {
     loading: state.user.loading,
     user: state.user,
     loadingMyCommunities: state.data.loadingMyCommunities,
-    allUsersCommunities: state.data.allUsersCommunities,
+    allUsersCommunities: state.data.allUsersCommunities.filter(({status})=>status ==='active'),
     usersPosts: state.data.usersPosts,
     isRefreshCommunity: state.data.isRefreshCommunity,
     recommendedCommunities: state.data.recommendedCommunities,

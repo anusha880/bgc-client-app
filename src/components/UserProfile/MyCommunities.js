@@ -145,7 +145,7 @@ const MyCommunities = ({
 MyCommunities.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  myCommunities: state.data.myCommunities,
+  myCommunities: state.data.myCommunities.filter(({status})=> status ==='active'),
   loadingMyCommunities: state.data.loadingMyCommunities,
 });
 

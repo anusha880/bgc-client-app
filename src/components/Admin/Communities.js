@@ -6,7 +6,7 @@ import { format } from "date-fns";
 
 import {
   getAllCommunities,
-  handleActivateDeactivateProfile,
+  handleActivateDeactivateCommunity,
 } from "../../firebaseActions/dataServices";
 import { DataTable } from "./Table";
 import { ActionsMenu } from "./ActionsMenu";
@@ -34,9 +34,10 @@ function CommunitiesPage({ user }) {
   };
 
   const handleActivateDeactivate = async () => {
-    await handleActivateDeactivateProfile(selectedCommunity);
+    await handleActivateDeactivateCommunity(selectedCommunity);
     await getCommunities();
-    handleClose();
+    setShowDialog(false);
+    setShowSuccessModal(true);
   };
 
   const columns = useMemo(
@@ -66,7 +67,11 @@ function CommunitiesPage({ user }) {
         accessor: "createdUsername",
         sortable: true,
         Cell: ({ row }) => {
-          return <Typography color="primary">{row.original.createdUsername}</Typography>;
+          return (
+            <Typography color="primary">
+              {row.original.createdUsername}
+            </Typography>
+          );
         },
       },
       {
@@ -108,7 +113,8 @@ function CommunitiesPage({ user }) {
         Cell: ({ row }) => {
           return (
             <div>
-              {row.original.lastPostAt && format(new Date(row.original.lastPostAt), "MMM dd, yyyy")}
+              {row.original.lastPostAt &&
+                format(new Date(row.original.lastPostAt), "MMM dd, yyyy")}
             </div>
           );
         },
@@ -209,7 +215,10 @@ function CommunitiesPage({ user }) {
       />
       <AlertInfoDialog
         open={showSuccessModal}
-        handleClose={() => setShowSuccessModal(false)}
+        handleClose={() => {
+          handleClose();
+          setShowSuccessModal(false);
+        }}
         dialogBody={inviteSuccessDialogBody()}
         dialogTitle={`${getActivateStatus()} Community `}
       />

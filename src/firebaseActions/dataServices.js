@@ -181,6 +181,7 @@ const myCommunity = async (user) => {
         members: doc.data().members,
         image: doc.data().imageUrl,
         createdMember: doc.data().createdMember,
+        status: doc.data().status,
       });
     }
   });
@@ -601,6 +602,20 @@ export const handleActivateDeactivateProfile = async (selectedUser) => {
   }
 };
 
+export const handleActivateDeactivateCommunity = async (selectedCommunity) => {
+  const { communityId, status } = selectedCommunity;
+  const newStatus = status === "active" ? "inactive" : "active";
+  const docRef = doc(db, "community", communityId);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    const updateData = {
+      status: newStatus,
+    };
+    const asd = await updateDoc(docRef, updateData);
+    return { ...docSnap.data(), ...updateData };
+  }
+};
+
 export const inviteAdmin = async (email) => {
   try {
     const docRef = doc(db, "users", email);
@@ -718,6 +733,7 @@ const addNewCommunity = async (newCommunity) => {
   try {
     const results = await addDoc(collection(db, "community"), {
       ...newCommunity,
+      status: 'active'
     });
     console.log(results.id);
     return results.id;
