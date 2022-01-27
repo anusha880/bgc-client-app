@@ -8,8 +8,11 @@ import Paper from "@mui/material/Paper";
 import CommunityCreateDailog from "../CommunityDailog";
 import {
   setCurrentCommunityId,
+  getRecommendedCommunity,
   getAllUsersCommunity,
   joinCommunity,
+  getAllCommunityOfUser,
+  getAllPostsOfUser,
 } from "../../../redux/actions/dataActions";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
@@ -201,14 +204,25 @@ CommunityTableHead.propTypes = {
 };
 
 const CommunityTable = ({
+  myCommunities,
+  loadingMyCommunities,
   allUsersCommunities,
   setCurrentCommunityId,
   updateTabIndex,
   user: { userInfo },
+  loading,
+  usersPosts,
+  getAllPostOfUserMemberCommunity,
   joinACommunity,
+  getAllRecommendedCommunities,
   getAllUsersCommunities,
+  recommendedCommunities,
+  isRefreshCommunity,
+  getAllUserCommunities,
   allUsersCommunitiesLoading,
+  recommendedCommunityLoading,
   joinCommunityLoading,
+  loadingUsersPosts,
   setActiveHeader,
 }) => {
   const history = useHistory();
@@ -482,14 +496,25 @@ CommunityTable.propTypes = {};
 
 const mapStateToProps = (state) => {
   return {
+    loading: state.user.loading,
     user: state.user,
-    allUsersCommunities: state.data.allUsersCommunities,
-    joinCommunityLoading: state.data.joinCommunityLoading,
+    loadingMyCommunities: state.data.loadingMyCommunities,
     allUsersCommunities: state.data.allUsersCommunities.filter(({status})=>status ==='active'),
+    usersPosts: state.data.usersPosts,
+    isRefreshCommunity: state.data.isRefreshCommunity,
+    recommendedCommunities: state.data.recommendedCommunities,
+    myCommunities: state.data.myCommunities,
+    recommendedCommunityLoading: state.data.recommendedCommunityLoading,
+    joinCommunityLoading: state.data.joinCommunityLoading,
+    loadingUsersPosts: state.data.loadingUsersPosts,
+    allUsersCommunitiesLoading: state.data.allUsersCommunitiesLoading,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  getAllPostOfUserMemberCommunity: () => dispatch(getAllPostsOfUser()),
+  getAllUserCommunities: () => dispatch(getAllCommunityOfUser()),
+  getAllRecommendedCommunities: () => dispatch(getRecommendedCommunity()),
   getAllUsersCommunities: () => dispatch(getAllUsersCommunity()),
   joinACommunity: (communityId) => dispatch(joinCommunity(communityId)),
   setCurrentCommunityId: (communityId) =>

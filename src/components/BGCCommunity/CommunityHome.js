@@ -58,16 +58,16 @@ const CommunityHome = ({
              );
              let ImgUrl = "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
                onSnapshot(userRef, (uersSnapshot) => { 
-                if (doc.data().imageUrl) {
-                  ImgUrl = doc.data().imageUrl;
-                } 
+            //    if (doc.data().imageUrl) {
+              //    ImgUrl = doc.data().imageUrl;
+               // }
                 uersSnapshot.forEach((doc) => {
                   if(doc.data().email && emailArray.includes(doc.data().email)){
                   communityMembers.push({
                     firstName: doc.data().firstName,
                     lastName: doc.data().lastName,
                     email: doc.data().email,
-                    imageUrl: ImgUrl,
+                    imageUrl: doc.data().imageUrl,
                     headLine: doc.data().headLine,
                    });
                   }
