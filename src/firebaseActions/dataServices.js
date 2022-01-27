@@ -35,14 +35,13 @@ const getAllRecommenededCommunities = async (user) => {
     const chapter = usersInterests[0].details[0].chapter;
     const querySnapshot = await getDocs(collection(db, "community"));
     let ImgUrl =
-    "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
- 
+      "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
+
     querySnapshot.forEach((item) => {
       if (
         item.data().members &&
         !item.data().members.filter((item) => item.email === email).length > 0
       ) {
-
         if (doc.data().imageUrl) {
           ImgUrl = doc.data().imageUrl;
         }
@@ -178,7 +177,7 @@ const myCommunity = async (user) => {
   const q = query(communityRef, orderBy("createdAt", "desc"));
   const querySnapshot = await getDocs(q);
   let ImgUrl =
-  "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
+    "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
 
   querySnapshot.forEach((doc) => {
     if (
@@ -514,7 +513,7 @@ const addAReportToPost = async (postId, currentReport) => {
       reports: filterReports,
       status: docSnap.data().status || "active",
       isReportPresent: true,
-      lastReportedAt: format(new Date(), "MMM dd, yyyy hh:mm a "),
+      lastReportedAt: new Date().toISOString(),
       adminAction: "pending",
     });
     return result;
@@ -550,7 +549,8 @@ const getAllMembers = async (user) => {
     const userRef = collection(db, "users");
     const q = query(userRef, orderBy("firstName", "asc"));
     const usersSnapshot = await getDocs(q);
-    let ImgUrl =  "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
+    let ImgUrl =
+      "https://firebasestorage.googleapis.com/v0/b/bgc-functions.appspot.com/o/no-img.png?alt=media";
 
     usersSnapshot.forEach((doc) => {
       if (doc.data().email !== email) {
@@ -621,7 +621,6 @@ export const handleActivateDeactivateProfile = async (selectedUser) => {
     return { ...docSnap.data(), ...updateData };
   }
 };
-
 
 export const handleActivateDeactivateCommunity = async (selectedCommunity) => {
   const { communityId, status } = selectedCommunity;
@@ -760,7 +759,7 @@ const addNewCommunity = async (newCommunity) => {
   try {
     const results = await addDoc(collection(db, "community"), {
       ...newCommunity,
-      status: 'active'
+      status: "active",
     });
     console.log(results.id);
     return results.id;

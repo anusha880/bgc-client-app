@@ -81,23 +81,25 @@ export function DataTable({
           alignItems: "center",
         }}
       >
-        <TextField
-          sx={{ p: 3 }}
-          label={searchPlaceholder}
-          placeholder={searchPlaceholder}
-          id="outlined-start-adornment"
-          className="search_community_searchBar"
-          value={globalFilter}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          sx={{ width: "50%" }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Search />
-              </InputAdornment>
-            ),
-          }}
-        />
+        {typeof searchPlaceholder != "undefined" && (
+          <TextField
+            sx={{ p: 3 }}
+            label={searchPlaceholder}
+            placeholder={searchPlaceholder}
+            id="outlined-start-adornment"
+            className="search_community_searchBar"
+            value={globalFilter}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            sx={{ width: "50%" }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Search />
+                </InputAdornment>
+              ),
+            }}
+          />
+        )}
         {TextFieldFlexComponent}
       </div>
 
@@ -112,7 +114,7 @@ export function DataTable({
               {headerGroup.headers.map((column) => (
                 <TableCell
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  style={{padding: 10}}
+                  style={{ padding: 10 }}
                 >
                   {column.render("Header")}
                   {column.sortable ? (

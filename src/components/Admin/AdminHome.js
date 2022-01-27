@@ -108,6 +108,7 @@ const AdminHomePage = ({
         type: SET_REPORTED_DATA,
         payload: reportsData,
       });
+      reportsData = [];
       setData((prevstate) => ({ ...prevstate, report: reportsData.length }));
     });
     getMembers();
